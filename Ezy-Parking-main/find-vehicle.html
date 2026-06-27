@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Find your parked vehicle instantly with Ezy-Parking">
+    <title>Find Vehicle - Ezy-Parking</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link href="css/styles.css" rel="stylesheet">
+    <link href="css/features.css" rel="stylesheet">
+    <link rel="icon" href="images/favicon.png">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav id="navbarExample" class="navbar navbar-expand-lg fixed-top navbar-light top-nav-collapse">
+        <div class="container">
+            <a class="navbar-brand logo-text" href="index.html">Ezy-Parking</a>
+            <button class="navbar-toggler p-0 border-0" type="button" id="navbarSideCollapse"><span class="navbar-toggler-icon"></span></button>
+            <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
+                <ul class="navbar-nav ms-auto navbar-nav-scroll">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="find-parking.html">Find Parking</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" href="#" id="featureDropdown" role="button" data-bs-toggle="dropdown">Features</a>
+                        <ul class="dropdown-menu feature-dropdown">
+                            <li><a class="dropdown-item" href="slot-tracker.html"><i class="fas fa-th"></i> Slot Tracker</a></li>
+                            <li><a class="dropdown-item" href="booking.html"><i class="fas fa-calendar-check"></i> Book a Slot</a></li>
+                            <li><a class="dropdown-item" href="gate.html"><i class="fas fa-door-open"></i> Smart Gate</a></li>
+                            <li><a class="dropdown-item" href="find-vehicle.html"><i class="fas fa-car"></i> Find Vehicle</a></li>
+                            <li><a class="dropdown-item" href="violations.html"><i class="fas fa-exclamation-triangle"></i> Violations</a></li>
+                            <li><a class="dropdown-item" href="community.html"><i class="fas fa-users"></i> Community</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="dashboard.html">Dashboard</a></li>
+                </ul>
+                <span class="nav-item"><a class="btn-outline-sm" href="log-in.html">Register / Log In</a></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <div class="feature-hero text-center">
+        <div class="container position-relative" style="z-index:2">
+            <div class="hero-icon"><i class="fas fa-search-location"></i></div>
+            <h1>Find Your Vehicle</h1>
+            <p class="col-lg-8 mx-auto">Lost track of where you parked? Enter your vehicle registration number and we'll show you exactly where it is.</p>
+        </div>
+    </div>
+
+    <!-- Vehicle Finder -->
+    <div class="feature-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <!-- Search form -->
+                    <div class="booking-form mb-4">
+                        <h4 class="section-title mb-3">Search Your Vehicle</h4>
+                        <div class="row g-3 align-items-end">
+                            <div class="col-md-5">
+                                <div class="form-group-fancy mb-0">
+                                    <label><i class="fas fa-id-card me-1"></i> Vehicle Registration</label>
+                                    <input type="text" class="form-control" id="findVehicleReg" placeholder="e.g. KA01AB1234" style="text-transform:uppercase;">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group-fancy mb-0">
+                                    <label><i class="fas fa-palette me-1"></i> Vehicle Color (optional)</label>
+                                    <select class="form-select" id="findVehicleColor">
+                                        <option value="">Any Color</option>
+                                        <option value="White">White</option>
+                                        <option value="Black">Black</option>
+                                        <option value="Silver">Silver</option>
+                                        <option value="Red">Red</option>
+                                        <option value="Blue">Blue</option>
+                                        <option value="Grey">Grey</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <button class="search-btn w-100" onclick="findVehicle()" style="padding:0.75rem;">
+                                    <i class="fas fa-search me-1"></i> Find
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Result -->
+                    <div id="vehicleResult"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <div class="container"><div class="row"><div class="col-lg-12">
+            <div class="footer-col first"><h6>About Website</h6><p class="p-small">Ezy-Parking is a complete parking management system that applies smart solutions for short time rental of empty spaces.</p></div>
+            <div class="footer-col second"><h6>Quick Links</h6><ul class="list-unstyled li-space-lg p-small"><li><a href="index.html">Home</a></li><li><a href="find-parking.html">Find Parking</a></li><li><a href="booking.html">Book a Slot</a></li><li><a href="dashboard.html">Dashboard</a></li></ul></div>
+            <div class="footer-col third">
+                <span class="fa-stack"><a href="#"><i class="fas fa-circle fa-stack-2x"></i><i class="fab fa-facebook-f fa-stack-1x"></i></a></span>
+                <span class="fa-stack"><a href="#"><i class="fas fa-circle fa-stack-2x"></i><i class="fab fa-twitter fa-stack-1x"></i></a></span>
+                <span class="fa-stack"><a href="#"><i class="fas fa-circle fa-stack-2x"></i><i class="fab fa-instagram fa-stack-1x"></i></a></span>
+                <p class="p-small">Contact us at <a href="mailto:contact@ezyparking.com"><strong>contact@ezyparking.com</strong></a></p>
+            </div>
+        </div></div></div>
+    </div>
+    <div class="copyright"><div class="container"><div class="row"><div class="col-lg-12"><p class="p-small">Copyright © <a href="index.html">Ezy-Parking</a></p></div></div></div></div>
+    <button onclick="topFunction()" id="myBtn"><img src="images/up-arrow.png" alt="Back to top"></button>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/scripts.js"></script>
+    <script>
+        document.getElementById('findVehicleReg').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') findVehicle();
+        });
+
+        function findVehicle() {
+            const reg = document.getElementById('findVehicleReg').value.trim().toUpperCase();
+            const color = document.getElementById('findVehicleColor').value;
+            const container = document.getElementById('vehicleResult');
+
+            if (!reg) {
+                container.innerHTML = '<div class="glass-card p-4 text-center" style="animation:fadeInUp 0.4s;"><i class="fas fa-exclamation-circle" style="font-size:2rem;color:var(--warning);"></i><p class="mt-2 mb-0">Please enter a vehicle registration number.</p></div>';
+                return;
+            }
+
+            // Search in active bookings
+            const bookings = EzyParking.findVehicleBooking(reg);
+            if (bookings.length === 0) {
+                container.innerHTML = `
+                    <div class="glass-card p-4 text-center" style="animation:fadeInUp 0.4s;">
+                        <i class="fas fa-car-crash" style="font-size:3rem;color:#d1d1d1;display:block;margin-bottom:1rem;"></i>
+                        <h5 style="color:var(--primary);">Vehicle Not Found</h5>
+                        <p style="color:#72719b;">No active booking found for <strong>${reg}</strong>. The vehicle may not be parked at any Ezy-Parking lot.</p>
+                        <a href="booking.html" class="search-btn" style="text-decoration:none;display:inline-block;margin-top:0.5rem;">Book a Spot →</a>
+                    </div>
+                `;
+                return;
+            }
+
+            const booking = bookings[0];
+            const lot = EzyParking.PARKING_LOTS.find(l => l.id === booking.lotId);
+            const slotNum = booking.slotNumber.replace('Slot ', '') || Math.floor(Math.random() * 30 + 1);
+
+            // Floor & Section logic
+            const floor = Math.ceil(parseInt(slotNum) / 20) || 1;
+            const section = String.fromCharCode(65 + ((parseInt(slotNum) % 4) || 0));
+
+            container.innerHTML = `
+                <div class="vehicle-result">
+                    <!-- Vehicle Info Card -->
+                    <div class="glass-card p-4 mb-4">
+                        <div class="row align-items-center">
+                            <div class="col-md-2 text-center">
+                                <div style="width:70px;height:70px;border-radius:50%;background:var(--gradient-2);display:flex;align-items:center;justify-content:center;margin:0 auto;">
+                                    <i class="fas fa-car" style="font-size:2rem;color:#fff;"></i>
+                                </div>
+                            </div>
+                            <div class="col-md-10">
+                                <h4 style="color:var(--primary);margin-bottom:0.5rem;">🎯 Vehicle Located!</h4>
+                                <div class="row mt-3">
+                                    <div class="col-6 col-md-3 mb-2">
+                                        <div style="font-size:0.75rem;color:#72719b;text-transform:uppercase;letter-spacing:1px;">Registration</div>
+                                        <div style="font-weight:700;color:var(--primary);font-size:1.1rem;">${booking.vehicleReg}</div>
+                                    </div>
+                                    <div class="col-6 col-md-3 mb-2">
+                                        <div style="font-size:0.75rem;color:#72719b;text-transform:uppercase;letter-spacing:1px;">Type</div>
+                                        <div style="font-weight:700;color:var(--primary);">${booking.vehicleType}</div>
+                                    </div>
+                                    <div class="col-6 col-md-3 mb-2">
+                                        <div style="font-size:0.75rem;color:#72719b;text-transform:uppercase;letter-spacing:1px;">Color</div>
+                                        <div style="font-weight:700;color:var(--primary);">${booking.vehicleColor}</div>
+                                    </div>
+                                    <div class="col-6 col-md-3 mb-2">
+                                        <div style="font-size:0.75rem;color:#72719b;text-transform:uppercase;letter-spacing:1px;">Parking Lot</div>
+                                        <div style="font-weight:700;color:var(--primary);">${lot ? lot.name : booking.lotName}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Location details -->
+                    <div class="row">
+                        <div class="col-md-5 mb-4">
+                            <div class="walking-directions">
+                                <h5 style="color:var(--primary);margin-bottom:1rem;"><i class="fas fa-walking me-2"></i>Walking Directions</h5>
+                                <div class="direction-step">
+                                    <div class="step-icon">1</div>
+                                    <span>Enter through the main gate</span>
+                                </div>
+                                <div class="direction-step">
+                                    <div class="step-icon">2</div>
+                                    <span>Go to <strong>Floor ${floor}</strong></span>
+                                </div>
+                                <div class="direction-step">
+                                    <div class="step-icon">3</div>
+                                    <span>Navigate to <strong>Section ${section}</strong></span>
+                                </div>
+                                <div class="direction-step">
+                                    <div class="step-icon">4</div>
+                                    <span>Your vehicle is at <strong style="color:var(--accent);font-size:1.1rem;">Slot ${slotNum}</strong></span>
+                                </div>
+                            </div>
+
+                            <!-- Big slot indicator -->
+                            <div style="background:var(--gradient-1);border-radius:16px;padding:2rem;text-align:center;margin-top:1rem;">
+                                <div style="color:rgba(255,255,255,0.6);font-size:0.75rem;text-transform:uppercase;letter-spacing:2px;">Your Slot</div>
+                                <div style="color:#fff;font-size:3.5rem;font-weight:800;line-height:1;">${slotNum}</div>
+                                <div style="color:rgba(255,255,255,0.7);font-size:0.9rem;">Floor ${floor} • Section ${section}</div>
+                            </div>
+                        </div>
+
+                        <!-- Mini parking grid showing vehicle location -->
+                        <div class="col-md-7 mb-4">
+                            <h5 style="color:var(--primary);margin-bottom:1rem;"><i class="fas fa-th me-2"></i>Parking Lot Map</h5>
+                            <div class="parking-grid-wrapper">
+                                <div class="parking-grid" id="miniGrid"></div>
+                                <div class="slot-legend mt-3">
+                                    <div class="slot-legend-item"><div class="slot-legend-dot lg-occupied"></div> Occupied</div>
+                                    <div class="slot-legend-item"><div class="slot-legend-dot" style="background:#00e676;border:2px solid #fff;box-shadow:0 0 10px #00e676;"></div> Your Vehicle</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Render mini grid
+            renderMiniGrid(parseInt(slotNum) || 15, lot ? lot.totalSlots : 48);
+        }
+
+        function renderMiniGrid(targetSlot, totalSlots) {
+            const grid = document.getElementById('miniGrid');
+            grid.innerHTML = '';
+            const displaySlots = Math.min(totalSlots, 48);
+            for (let i = 1; i <= displaySlots; i++) {
+                const div = document.createElement('div');
+                if (i === targetSlot) {
+                    div.className = 'parking-slot found-vehicle';
+                    div.innerHTML = '🚗';
+                    div.style.fontSize = '1rem';
+                } else {
+                    div.className = 'parking-slot occupied';
+                }
+                div.textContent = div.textContent || i;
+                grid.appendChild(div);
+            }
+            // Scroll to the found slot
+            setTimeout(() => {
+                const found = grid.querySelector('.found-vehicle');
+                if (found) found.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 300);
+        }
+    </script>
+</body>
+</html>

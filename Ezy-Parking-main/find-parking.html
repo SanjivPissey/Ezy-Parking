@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Find parking spots near you with Ezy-Parking interactive map">
+    <title>Find Parking - Ezy-Parking</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link href="css/styles.css" rel="stylesheet">
+    <link href="css/features.css" rel="stylesheet">
+    <link rel="icon" href="images/favicon.png">
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav id="navbarExample" class="navbar navbar-expand-lg fixed-top navbar-light top-nav-collapse" aria-label="Main navigation">
+        <div class="container">
+            <a class="navbar-brand logo-text" href="index.html">Ezy-Parking</a>
+            <button class="navbar-toggler p-0 border-0" type="button" id="navbarSideCollapse" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
+                <ul class="navbar-nav ms-auto navbar-nav-scroll">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="find-parking.html">Find Parking</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="featureDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Features</a>
+                        <ul class="dropdown-menu feature-dropdown" aria-labelledby="featureDropdown">
+                            <li><a class="dropdown-item" href="slot-tracker.html"><i class="fas fa-th"></i> Slot Tracker</a></li>
+                            <li><a class="dropdown-item" href="booking.html"><i class="fas fa-calendar-check"></i> Book a Slot</a></li>
+                            <li><a class="dropdown-item" href="gate.html"><i class="fas fa-door-open"></i> Smart Gate</a></li>
+                            <li><a class="dropdown-item" href="find-vehicle.html"><i class="fas fa-car"></i> Find Vehicle</a></li>
+                            <li><a class="dropdown-item" href="violations.html"><i class="fas fa-exclamation-triangle"></i> Violations</a></li>
+                            <li><a class="dropdown-item" href="community.html"><i class="fas fa-users"></i> Community</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="dashboard.html">Dashboard</a></li>
+                </ul>
+                <span class="nav-item">
+                    <a class="btn-outline-sm" href="log-in.html">Register / Log In</a>
+                </span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <div class="feature-hero text-center">
+        <div class="container position-relative" style="z-index:2">
+            <div class="hero-icon"><i class="fas fa-map-marked-alt"></i></div>
+            <h1>Find Parking Near You</h1>
+            <p class="col-lg-8 mx-auto">Discover available parking spots with real-time availability, pricing, and nearby events — all on an interactive map.</p>
+        </div>
+    </div>
+
+    <!-- Map Section -->
+    <div class="feature-section">
+        <div class="container">
+            <!-- Search Box -->
+            <div class="map-search-box mb-4">
+                <div class="row g-3 align-items-end">
+                    <div class="col-md-5">
+                        <label class="form-label fw-bold">Search Location <button id="voiceSearchBtn" class="btn btn-sm btn-outline-primary ms-2" style="border-radius:50%;padding:2px 8px;" onclick="startVoiceSearch()" title="Search by Voice"><i class="fas fa-microphone"></i></button></label>
+                        <input type="text" class="form-control" id="searchLocation" placeholder="Enter area, landmark, or pincode...">
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label fw-bold">Vehicle Type</label>
+                        <select class="form-select" id="vehicleTypeFilter" style="border-radius:10px;border:2px solid #e8e8f0;padding:0.8rem 1.2rem;">
+                            <option value="all">All Types</option>
+                            <option value="Car">Car</option>
+                            <option value="Bike">Bike</option>
+                            <option value="SUV">SUV</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label fw-bold">Max Price</label>
+                        <input type="number" class="form-control" id="maxPrice" placeholder="₹/hr" min="0">
+                    </div>
+                    <div class="col-md-2 d-flex gap-2">
+                        <button class="search-btn w-100" style="flex: 1;" onclick="searchParking()" title="Search">
+                            <i class="fas fa-search"></i>
+                        </button>
+                        <button class="btn w-100 fw-bold" style="flex: 1; background: linear-gradient(135deg, #8e2de2, #4a00e0); color: white; border: none; border-radius: 10px;" onclick="aiRecommend()" title="AI Recommend Best Spot">
+                            <i class="fas fa-magic"></i> AI
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Map -->
+            <div id="parkingMap" class="mb-4"></div>
+
+            <!-- Results -->
+            <div class="row mt-4">
+                <div class="col-lg-8">
+                    <h3 class="section-title mb-4">Available Parking Lots</h3>
+                    <div id="lotResults"></div>
+                </div>
+                <div class="col-lg-4">
+                    <h3 class="section-title mb-4">Nearby Events</h3>
+                    <div id="eventResults"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="footer-col first">
+                        <h6>About Website</h6>
+                        <p class="p-small">Ezy-Parking is a complete parking management system that applies smart solutions for short time rental of empty spaces.</p>
+                    </div>
+                    <div class="footer-col second">
+                        <h6>Quick Links</h6>
+                        <ul class="list-unstyled li-space-lg p-small">
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="find-parking.html">Find Parking</a></li>
+                            <li><a href="booking.html">Book a Slot</a></li>
+                            <li><a href="dashboard.html">Dashboard</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col third">
+                        <span class="fa-stack"><a href="#"><i class="fas fa-circle fa-stack-2x"></i><i class="fab fa-facebook-f fa-stack-1x"></i></a></span>
+                        <span class="fa-stack"><a href="#"><i class="fas fa-circle fa-stack-2x"></i><i class="fab fa-twitter fa-stack-1x"></i></a></span>
+                        <span class="fa-stack"><a href="#"><i class="fas fa-circle fa-stack-2x"></i><i class="fab fa-instagram fa-stack-1x"></i></a></span>
+                        <p class="p-small">Contact us at <a href="mailto:contact@ezyparking.com"><strong>contact@ezyparking.com</strong></a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="copyright"><div class="container"><div class="row"><div class="col-lg-12"><p class="p-small">Copyright © <a href="index.html">Ezy-Parking</a></p></div></div></div></div>
+
+    <button onclick="topFunction()" id="myBtn"><img src="images/up-arrow.png" alt="Back to top"></button>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/scripts.js"></script>
+    <script>
+        let map, markers = [];
+
+        // Initialize map
+        document.addEventListener('DOMContentLoaded', function() {
+            map = L.map('parkingMap').setView([12.9716, 77.5946], 12);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(map);
+
+            loadAllLots();
+            loadEvents();
+        });
+
+        function getAvailableSlots(lot) {
+            return Math.floor(lot.totalSlots * (0.3 + Math.random() * 0.5));
+        }
+
+        function loadAllLots() {
+            markers.forEach(m => map.removeLayer(m));
+            markers = [];
+            const container = document.getElementById('lotResults');
+            container.innerHTML = '';
+
+            EzyParking.PARKING_LOTS.forEach((lot, i) => {
+                const available = getAvailableSlots(lot);
+                const pct = available / lot.totalSlots;
+                const color = pct > 0.5 ? '#00c853' : pct > 0.2 ? '#ffc107' : '#ff5252';
+
+                // Map marker
+                const icon = L.divIcon({
+                    className: 'custom-marker',
+                    html: `<div style="background:${color};color:#fff;padding:6px 10px;border-radius:20px;font-weight:700;font-size:12px;white-space:nowrap;box-shadow:0 3px 10px rgba(0,0,0,0.3);border:2px solid #fff;">${available} slots • ₹${lot.pricePerHour}/hr</div>`,
+                    iconSize: [120, 30],
+                    iconAnchor: [60, 15]
+                });
+                const marker = L.marker([lot.lat, lot.lng], { icon }).addTo(map);
+                marker.bindPopup(`
+                    <div style="min-width:200px;font-family:'Open Sans',sans-serif;">
+                        <h6 style="margin-bottom:5px;font-weight:700;">${lot.name}</h6>
+                        <p style="margin-bottom:8px;font-size:13px;color:#666;">${lot.address}</p>
+                        <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;">
+                            <span style="background:#fff3e0;color:#e65100;padding:3px 8px;border-radius:10px;font-size:11px;font-weight:600;">₹${lot.pricePerHour}/hr</span>
+                            <span style="background:#e8f5e9;color:#2e7d32;padding:3px 8px;border-radius:10px;font-size:11px;font-weight:600;">${available}/${lot.totalSlots} slots</span>
+                            <span style="background:#e3f2fd;color:#1565c0;padding:3px 8px;border-radius:10px;font-size:11px;font-weight:600;">${lot.type}</span>
+                        </div>
+                        <a href="booking.html?lot=${lot.id}" style="display:inline-block;background:linear-gradient(135deg,#f25c05,#ff8534);color:#fff;padding:8px 16px;border-radius:20px;text-decoration:none;font-size:12px;font-weight:600;">Book Now →</a>
+                    </div>
+                `);
+                markers.push(marker);
+
+                // Card
+                container.innerHTML += `
+                    <div class="lot-card mb-3" style="animation-delay:${i * 0.1}s" onclick="map.flyTo([${lot.lat},${lot.lng}],15);markers[${i}].openPopup();">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <div class="lot-name">${lot.name}</div>
+                                <div class="lot-address"><i class="fas fa-map-marker-alt me-1"></i>${lot.address}</div>
+                            </div>
+                            <div style="background:${color};color:#fff;padding:6px 12px;border-radius:20px;font-weight:700;font-size:0.8rem;">
+                                ${available} free
+                            </div>
+                        </div>
+                        <div class="lot-meta mt-2">
+                            <span class="price-tag"><i class="fas fa-tag me-1"></i>₹${lot.pricePerHour}/hr</span>
+                            <span class="slots-tag"><i class="fas fa-car me-1"></i>${lot.totalSlots} total</span>
+                            <span class="type-tag"><i class="fas fa-building me-1"></i>${lot.type}</span>
+                            <span class="rating-tag"><i class="fas fa-star me-1"></i>${lot.rating}</span>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function loadEvents() {
+            const container = document.getElementById('eventResults');
+            container.innerHTML = '';
+            EzyParking.EVENTS.forEach(ev => {
+                container.innerHTML += `
+                    <div class="event-card">
+                        <div class="event-name"><i class="fas fa-calendar-alt me-2" style="color:var(--info)"></i>${ev.name}</div>
+                        <div class="event-details mt-1">
+                            <i class="fas fa-map-pin me-1"></i>${ev.venue}<br>
+                            <i class="fas fa-clock me-1"></i>${ev.date} at ${ev.time}
+                            <span style="background:#ede7f6;color:#5e35b1;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600;margin-left:5px;">${ev.category}</span>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function searchParking() {
+            const query = document.getElementById('searchLocation').value.toLowerCase();
+            const maxPrice = parseInt(document.getElementById('maxPrice').value) || Infinity;
+            const container = document.getElementById('lotResults');
+            container.innerHTML = '';
+            markers.forEach(m => map.removeLayer(m));
+            markers = [];
+
+            let filtered = EzyParking.PARKING_LOTS.filter(lot => {
+                const matchQuery = !query || lot.name.toLowerCase().includes(query) || lot.address.toLowerCase().includes(query);
+                const matchPrice = lot.pricePerHour <= maxPrice;
+                return matchQuery && matchPrice;
+            });
+
+            if (filtered.length === 0) {
+                container.innerHTML = '<div class="empty-state"><i class="fas fa-search"></i><p>No parking lots found matching your criteria.</p></div>';
+                return;
+            }
+
+            // Re-center on first result
+            map.flyTo([filtered[0].lat, filtered[0].lng], 13);
+
+            filtered.forEach((lot, i) => {
+                const available = getAvailableSlots(lot);
+                const pct = available / lot.totalSlots;
+                const color = pct > 0.5 ? '#00c853' : pct > 0.2 ? '#ffc107' : '#ff5252';
+
+                const icon = L.divIcon({
+                    className: 'custom-marker',
+                    html: `<div style="background:${color};color:#fff;padding:6px 10px;border-radius:20px;font-weight:700;font-size:12px;white-space:nowrap;box-shadow:0 3px 10px rgba(0,0,0,0.3);border:2px solid #fff;">${available} slots • ₹${lot.pricePerHour}/hr</div>`,
+                    iconSize: [120, 30], iconAnchor: [60, 15]
+                });
+                const marker = L.marker([lot.lat, lot.lng], { icon }).addTo(map);
+                marker.bindPopup(`<div style="min-width:200px;font-family:'Open Sans',sans-serif;"><h6 style="font-weight:700;">${lot.name}</h6><p style="font-size:13px;color:#666;">${lot.address}</p><a href="booking.html?lot=${lot.id}" style="display:inline-block;background:linear-gradient(135deg,#f25c05,#ff8534);color:#fff;padding:8px 16px;border-radius:20px;text-decoration:none;font-size:12px;font-weight:600;">Book Now →</a></div>`);
+                markers.push(marker);
+
+                container.innerHTML += `
+                    <div class="lot-card mb-3" style="animation-delay:${i * 0.1}s" onclick="map.flyTo([${lot.lat},${lot.lng}],15);markers[${i}].openPopup();">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <div class="lot-name">${lot.name}</div>
+                                <div class="lot-address"><i class="fas fa-map-marker-alt me-1"></i>${lot.address}</div>
+                            </div>
+                            <div style="background:${color};color:#fff;padding:6px 12px;border-radius:20px;font-weight:700;font-size:0.8rem;">${available} free</div>
+                        </div>
+                        <div class="lot-meta mt-2">
+                            <span class="price-tag"><i class="fas fa-tag me-1"></i>₹${lot.pricePerHour}/hr</span>
+                            <span class="slots-tag"><i class="fas fa-car me-1"></i>${lot.totalSlots} total</span>
+                            <span class="type-tag"><i class="fas fa-building me-1"></i>${lot.type}</span>
+                            <span class="rating-tag"><i class="fas fa-star me-1"></i>${lot.rating}</span>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        // Enter key search
+        document.getElementById('searchLocation').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') searchParking();
+        });
+
+        // --- AI Voice Search ---
+        function startVoiceSearch() {
+            if (!('webkitSpeechRecognition' in window)) {
+                alert("Your browser does not support voice search. Please try Chrome.");
+                return;
+            }
+            const recognition = new webkitSpeechRecognition();
+            recognition.lang = 'en-US';
+            recognition.interimResults = false;
+            recognition.maxAlternatives = 1;
+
+            const btn = document.getElementById('voiceSearchBtn');
+            btn.classList.add('btn-danger');
+            btn.classList.remove('btn-outline-primary');
+            btn.innerHTML = '<i class="fas fa-microphone-slash"></i>';
+
+            recognition.start();
+
+            recognition.onresult = function(event) {
+                const transcript = event.results[0][0].transcript;
+                document.getElementById('searchLocation').value = transcript.replace(/[.,]/g, '');
+                searchParking();
+            };
+
+            recognition.onspeechend = function() {
+                recognition.stop();
+                btn.classList.remove('btn-danger');
+                btn.classList.add('btn-outline-primary');
+                btn.innerHTML = '<i class="fas fa-microphone"></i>';
+            };
+
+            recognition.onerror = function(event) {
+                console.error("Speech recognition error", event.error);
+                btn.classList.remove('btn-danger');
+                btn.classList.add('btn-outline-primary');
+                btn.innerHTML = '<i class="fas fa-microphone"></i>';
+            };
+        }
+
+        // --- AI Smart Spot Recommender ---
+        function aiRecommend() {
+            if(EzyParking.PARKING_LOTS.length === 0) return;
+            
+            let bestLot = null;
+            let bestScore = -Infinity;
+
+            EzyParking.PARKING_LOTS.forEach(lot => {
+                const available = getAvailableSlots(lot);
+                if(available === 0) return; // Ignore full lots
+                
+                // Smart heuristic scoring
+                const priceScore = 100 - lot.pricePerHour; // Lower price = higher score
+                const ratingScore = lot.rating * 20; // 5 stars = 100
+                const availabilityScore = (available / lot.totalSlots) * 50; 
+                
+                const totalScore = (priceScore * 1.5) + (ratingScore * 2.0) + availabilityScore;
+                
+                if(totalScore > bestScore) {
+                    bestScore = totalScore;
+                    bestLot = lot;
+                }
+            });
+
+            if(bestLot) {
+                document.getElementById('searchLocation').value = bestLot.name;
+                document.getElementById('maxPrice').value = '';
+                document.getElementById('vehicleTypeFilter').value = 'all';
+                searchParking();
+                
+                // Highlight AI recommendation
+                const container = document.getElementById('lotResults');
+                container.innerHTML = '<div class="alert alert-success fw-bold text-center" style="background: linear-gradient(135deg, #e0c3fc, #8ec5fc); border: none; color: #333;"><i class="fas fa-magic me-2"></i> AI Recommendation: Best Value & Rating</div>' + container.innerHTML;
+            } else {
+                alert("No suitable parking lots available to recommend.");
+            }
+        }
+    </script>
+</body>
+</html>

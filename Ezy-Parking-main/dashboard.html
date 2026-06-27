@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Your Ezy-Parking dashboard - manage bookings, violations, and more">
+    <title>Dashboard - Ezy-Parking</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link href="css/styles.css" rel="stylesheet">
+    <link href="css/features.css" rel="stylesheet">
+    <link rel="icon" href="images/favicon.png">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav id="navbarExample" class="navbar navbar-expand-lg fixed-top navbar-light top-nav-collapse">
+        <div class="container">
+            <a class="navbar-brand logo-text" href="index.html">Ezy-Parking</a>
+            <button class="navbar-toggler p-0 border-0" type="button" id="navbarSideCollapse"><span class="navbar-toggler-icon"></span></button>
+            <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
+                <ul class="navbar-nav ms-auto navbar-nav-scroll">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="find-parking.html">Find Parking</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="featureDropdown" role="button" data-bs-toggle="dropdown">Features</a>
+                        <ul class="dropdown-menu feature-dropdown">
+                            <li><a class="dropdown-item" href="slot-tracker.html"><i class="fas fa-th"></i> Slot Tracker</a></li>
+                            <li><a class="dropdown-item" href="booking.html"><i class="fas fa-calendar-check"></i> Book a Slot</a></li>
+                            <li><a class="dropdown-item" href="gate.html"><i class="fas fa-door-open"></i> Smart Gate</a></li>
+                            <li><a class="dropdown-item" href="find-vehicle.html"><i class="fas fa-car"></i> Find Vehicle</a></li>
+                            <li><a class="dropdown-item" href="violations.html"><i class="fas fa-exclamation-triangle"></i> Violations</a></li>
+                            <li><a class="dropdown-item" href="community.html"><i class="fas fa-users"></i> Community</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a class="nav-link active" href="dashboard.html">Dashboard</a></li>
+                </ul>
+                <span class="nav-item"><a class="btn-outline-sm" href="log-in.html">Register / Log In</a></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <div class="feature-hero text-center">
+        <div class="container position-relative" style="z-index:2">
+            <div class="hero-icon"><i class="fas fa-tachometer-alt"></i></div>
+            <h1>Your Dashboard</h1>
+            <p class="col-lg-8 mx-auto">Manage your bookings, track violations, and access all Ezy-Parking features from one place.</p>
+        </div>
+    </div>
+
+    <!-- Dashboard -->
+    <div class="feature-section">
+        <div class="container">
+            <!-- Stats Cards -->
+            <div class="dashboard-grid mb-4">
+                <div class="dash-card dc-bookings" style="animation:fadeInUp 0.5s ease-out;">
+                    <div class="dash-icon"><i class="fas fa-calendar-check"></i></div>
+                    <div class="dash-number" id="totalBookings">0</div>
+                    <div class="dash-label">Total Bookings</div>
+                </div>
+                <div class="dash-card dc-bookings" style="animation:fadeInUp 0.5s ease-out 0.1s both;">
+                    <div class="dash-icon" style="background:#e8f5e9;color:var(--success);"><i class="fas fa-check-circle"></i></div>
+                    <div class="dash-number" id="activeBookings">0</div>
+                    <div class="dash-label">Active Bookings</div>
+                </div>
+                <div class="dash-card dc-violations" style="animation:fadeInUp 0.5s ease-out 0.2s both;">
+                    <div class="dash-icon"><i class="fas fa-flag"></i></div>
+                    <div class="dash-number" id="totalViolations">0</div>
+                    <div class="dash-label">Violations Reported</div>
+                </div>
+                <div class="dash-card dc-community" style="animation:fadeInUp 0.5s ease-out 0.3s both;">
+                    <div class="dash-icon"><i class="fas fa-share-alt"></i></div>
+                    <div class="dash-number" id="totalPosts">0</div>
+                    <div class="dash-label">Spots Shared</div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <h3 class="section-title mb-3">Quick Actions</h3>
+            <div class="quick-actions mb-5">
+                <a href="find-parking.html" class="quick-action-btn">
+                    <div class="qa-icon"><i class="fas fa-map-marked-alt"></i></div>
+                    Find Parking
+                </a>
+                <a href="booking.html" class="quick-action-btn">
+                    <div class="qa-icon"><i class="fas fa-calendar-plus"></i></div>
+                    Book a Slot
+                </a>
+                <a href="slot-tracker.html" class="quick-action-btn">
+                    <div class="qa-icon"><i class="fas fa-th-large"></i></div>
+                    Slot Tracker
+                </a>
+                <a href="gate.html" class="quick-action-btn">
+                    <div class="qa-icon"><i class="fas fa-door-open"></i></div>
+                    Smart Gate
+                </a>
+                <a href="find-vehicle.html" class="quick-action-btn">
+                    <div class="qa-icon"><i class="fas fa-search-location"></i></div>
+                    Find Vehicle
+                </a>
+                <a href="violations.html" class="quick-action-btn">
+                    <div class="qa-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                    Report Violation
+                </a>
+                <a href="community.html" class="quick-action-btn">
+                    <div class="qa-icon"><i class="fas fa-users"></i></div>
+                    Community
+                </a>
+            </div>
+
+            <!-- Booking History -->
+            <h3 class="section-title mb-3">Booking History</h3>
+            <div class="section-subtitle">All your past and current reservations</div>
+            <div id="bookingHistory" class="mb-5"></div>
+
+            <!-- Recent Violations -->
+            <div class="row">
+                <div class="col-lg-6">
+                    <h3 class="section-title mb-3">Recent Violations</h3>
+                    <div id="recentViolations" class="glass-card p-4"></div>
+                </div>
+                <div class="col-lg-6">
+                    <h3 class="section-title mb-3">Gate Activity</h3>
+                    <div id="recentGateLogs" class="glass-card p-4"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <div class="container"><div class="row"><div class="col-lg-12">
+            <div class="footer-col first"><h6>About Website</h6><p class="p-small">Ezy-Parking is a complete parking management system that applies smart solutions for short time rental of empty spaces.</p></div>
+            <div class="footer-col second"><h6>Quick Links</h6><ul class="list-unstyled li-space-lg p-small"><li><a href="index.html">Home</a></li><li><a href="find-parking.html">Find Parking</a></li><li><a href="booking.html">Book a Slot</a></li></ul></div>
+            <div class="footer-col third">
+                <span class="fa-stack"><a href="#"><i class="fas fa-circle fa-stack-2x"></i><i class="fab fa-facebook-f fa-stack-1x"></i></a></span>
+                <span class="fa-stack"><a href="#"><i class="fas fa-circle fa-stack-2x"></i><i class="fab fa-twitter fa-stack-1x"></i></a></span>
+                <span class="fa-stack"><a href="#"><i class="fas fa-circle fa-stack-2x"></i><i class="fab fa-instagram fa-stack-1x"></i></a></span>
+                <p class="p-small">Contact us at <a href="mailto:contact@ezyparking.com"><strong>contact@ezyparking.com</strong></a></p>
+            </div>
+        </div></div></div>
+    </div>
+    <div class="copyright"><div class="container"><div class="row"><div class="col-lg-12"><p class="p-small">Copyright © <a href="index.html">Ezy-Parking</a></p></div></div></div></div>
+    <button onclick="topFunction()" id="myBtn"><img src="images/up-arrow.png" alt="Back to top"></button>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/scripts.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            loadDashboard();
+        });
+
+        function loadDashboard() {
+            const bookings = EzyParking.getBookings();
+            const violations = EzyParking.getViolations();
+            const posts = EzyParking.getPosts();
+            const gateLogs = EzyParking.getGateLogs();
+
+            // Stats
+            document.getElementById('totalBookings').textContent = bookings.length;
+            document.getElementById('activeBookings').textContent = bookings.filter(b => b.status === 'Active').length;
+            document.getElementById('totalViolations').textContent = violations.length;
+            document.getElementById('totalPosts').textContent = posts.length;
+
+            // Booking history
+            const bhContainer = document.getElementById('bookingHistory');
+            if (bookings.length === 0) {
+                bhContainer.innerHTML = '<div class="glass-card p-4"><div class="empty-state"><i class="fas fa-calendar"></i><p>No bookings yet. <a href="booking.html">Book your first slot!</a></p></div></div>';
+            } else {
+                let rows = bookings.slice().reverse().map(b => `
+                    <tr>
+                        <td><span style="font-family:monospace;font-weight:600;color:var(--accent);font-size:0.8rem;">${b.id}</span></td>
+                        <td>${b.lotName}</td>
+                        <td>${b.vehicleReg}</td>
+                        <td>${b.vehicleType}</td>
+                        <td>${EzyParking.formatDateTime(b.entryTime)}</td>
+                        <td>${EzyParking.formatDateTime(b.exitTime)}</td>
+                        <td style="font-weight:700;">₹${b.cost}</td>
+                        <td><span class="status-badge ${b.status.toLowerCase()}">${b.status}</span></td>
+                        <td>
+                            ${b.status === 'Active' ? `<button onclick="cancelBooking('${b.id}')" style="background:none;border:1px solid #ff5252;color:#ff5252;border-radius:6px;padding:4px 10px;font-size:0.75rem;cursor:pointer;transition:all 0.2s;" onmouseover="this.style.background='#ff5252';this.style.color='#fff'" onmouseout="this.style.background='none';this.style.color='#ff5252'">Cancel</button>` : '—'}
+                        </td>
+                    </tr>
+                `).join('');
+
+                bhContainer.innerHTML = `
+                    <div style="overflow-x:auto;">
+                        <table class="booking-table">
+                            <thead>
+                                <tr>
+                                    <th>Booking ID</th>
+                                    <th>Parking Lot</th>
+                                    <th>Vehicle</th>
+                                    <th>Type</th>
+                                    <th>Entry</th>
+                                    <th>Exit</th>
+                                    <th>Cost</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>${rows}</tbody>
+                        </table>
+                    </div>
+                `;
+            }
+
+            // Recent Violations
+            const vContainer = document.getElementById('recentViolations');
+            if (violations.length === 0) {
+                vContainer.innerHTML = '<div class="empty-state" style="padding:1.5rem;"><i class="fas fa-shield-alt" style="font-size:2rem;"></i><p style="font-size:0.85rem;">No violations reported</p></div>';
+            } else {
+                vContainer.innerHTML = violations.slice(-5).reverse().map(v => `
+                    <div style="display:flex;gap:1rem;padding:0.6rem 0;border-bottom:1px solid #f0f0f5;">
+                        <div style="width:38px;height:38px;border-radius:50%;background:#fce4ec;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                            <i class="fas fa-flag" style="color:var(--danger);font-size:0.8rem;"></i>
+                        </div>
+                        <div style="flex:1;">
+                            <div style="font-weight:600;font-size:0.85rem;color:var(--primary);">${v.vehicleReg} — ${v.zone}</div>
+                            <div style="font-size:0.75rem;color:#aaa;">${EzyParking.formatDateTime(v.reportedAt)}</div>
+                        </div>
+                        <span class="status-badge" style="background:#fff3e0;color:#e65100;align-self:center;">${v.status}</span>
+                    </div>
+                `).join('');
+            }
+
+            // Gate logs
+            const gContainer = document.getElementById('recentGateLogs');
+            if (gateLogs.length === 0) {
+                gContainer.innerHTML = '<div class="empty-state" style="padding:1.5rem;"><i class="fas fa-door-closed" style="font-size:2rem;"></i><p style="font-size:0.85rem;">No gate activity yet</p></div>';
+            } else {
+                gContainer.innerHTML = gateLogs.slice(0, 5).map(log => `
+                    <div style="display:flex;gap:1rem;padding:0.6rem 0;border-bottom:1px solid #f0f0f5;">
+                        <div style="width:38px;height:38px;border-radius:50%;background:${log.action === 'Entry' ? '#e8f5e9' : '#e3f2fd'};display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                            <i class="fas ${log.action === 'Entry' ? 'fa-sign-in-alt' : 'fa-sign-out-alt'}" style="color:${log.action === 'Entry' ? '#2e7d32' : '#1565c0'};font-size:0.8rem;"></i>
+                        </div>
+                        <div style="flex:1;">
+                            <div style="font-weight:600;font-size:0.85rem;color:var(--primary);">${log.vehicleReg} — ${log.action}</div>
+                            <div style="font-size:0.75rem;color:#aaa;">${EzyParking.formatDateTime(log.timestamp)}</div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function cancelBooking(id) {
+            if (confirm('Are you sure you want to cancel this booking?')) {
+                EzyParking.cancelBooking(id);
+                loadDashboard();
+                const toast = document.createElement('div');
+                toast.className = 'toast-notification error';
+                toast.innerHTML = '<span class="toast-icon">❌</span><span class="toast-msg">Booking cancelled successfully</span>';
+                document.body.appendChild(toast);
+                setTimeout(() => toast.remove(), 3000);
+            }
+        }
+    </script>
+</body>
+</html>

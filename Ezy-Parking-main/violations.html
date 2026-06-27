@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Report no-parking zone violations with Ezy-Parking">
+    <title>Report Violations - Ezy-Parking</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link href="css/styles.css" rel="stylesheet">
+    <link href="css/features.css" rel="stylesheet">
+    <link rel="icon" href="images/favicon.png">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav id="navbarExample" class="navbar navbar-expand-lg fixed-top navbar-light top-nav-collapse">
+        <div class="container">
+            <a class="navbar-brand logo-text" href="index.html">Ezy-Parking</a>
+            <button class="navbar-toggler p-0 border-0" type="button" id="navbarSideCollapse"><span class="navbar-toggler-icon"></span></button>
+            <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
+                <ul class="navbar-nav ms-auto navbar-nav-scroll">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="find-parking.html">Find Parking</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" href="#" id="featureDropdown" role="button" data-bs-toggle="dropdown">Features</a>
+                        <ul class="dropdown-menu feature-dropdown">
+                            <li><a class="dropdown-item" href="slot-tracker.html"><i class="fas fa-th"></i> Slot Tracker</a></li>
+                            <li><a class="dropdown-item" href="booking.html"><i class="fas fa-calendar-check"></i> Book a Slot</a></li>
+                            <li><a class="dropdown-item" href="gate.html"><i class="fas fa-door-open"></i> Smart Gate</a></li>
+                            <li><a class="dropdown-item" href="find-vehicle.html"><i class="fas fa-car"></i> Find Vehicle</a></li>
+                            <li><a class="dropdown-item" href="violations.html"><i class="fas fa-exclamation-triangle"></i> Violations</a></li>
+                            <li><a class="dropdown-item" href="community.html"><i class="fas fa-users"></i> Community</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="dashboard.html">Dashboard</a></li>
+                </ul>
+                <span class="nav-item"><a class="btn-outline-sm" href="log-in.html">Register / Log In</a></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <div class="feature-hero text-center">
+        <div class="container position-relative" style="z-index:2">
+            <div class="hero-icon"><i class="fas fa-exclamation-triangle"></i></div>
+            <h1>No-Parking Zone Violations</h1>
+            <p class="col-lg-8 mx-auto">Report vehicles parked in no-parking zones. The owner will be notified by email and RTO will be alerted for towing.</p>
+        </div>
+    </div>
+
+    <!-- Violations Section -->
+    <div class="feature-section">
+        <div class="container">
+            <div class="row">
+                <!-- Report Form -->
+                <div class="col-lg-6 mb-4">
+                    <div class="booking-form">
+                        <h4 class="section-title mb-3">Report a Violation</h4>
+                        <form id="violationForm" onsubmit="return reportViolation(event)">
+                            <div class="form-group-fancy">
+                                <label><i class="fas fa-id-card me-1"></i> Vehicle Registration Number</label>
+                                <input type="text" class="form-control" id="vioVehicleReg" placeholder="e.g. KA01AB1234" required style="text-transform:uppercase;">
+                            </div>
+                            <div class="form-group-fancy">
+                                <label><i class="fas fa-map-marker-alt me-1"></i> No-Parking Zone</label>
+                                <select class="form-select" id="vioZone" required>
+                                    <option value="">Select zone...</option>
+                                </select>
+                            </div>
+                            <div class="form-group-fancy">
+                                <label><i class="fas fa-camera me-1"></i> Upload Photo Evidence</label>
+                                <input type="file" class="form-control" id="vioPhoto" accept="image/*" style="padding:0.5rem 1rem;">
+                            </div>
+                            <div class="form-group-fancy">
+                                <label><i class="fas fa-comment me-1"></i> Description</label>
+                                <textarea class="form-control" id="vioDescription" rows="3" placeholder="Describe the violation..." required></textarea>
+                            </div>
+                            <button type="submit" class="search-btn w-100" style="padding:1rem;background:linear-gradient(135deg,#ff5252,#d32f2f);">
+                                <i class="fas fa-flag me-2"></i> Report Violation
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Result + History -->
+                <div class="col-lg-6">
+                    <!-- Report Result -->
+                    <div id="violationResult" style="display:none;"></div>
+
+                    <!-- Violation History -->
+                    <div class="glass-card p-4">
+                        <h4 class="section-title mb-3">Violation History</h4>
+                        <div id="violationHistory"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <div class="container"><div class="row"><div class="col-lg-12">
+            <div class="footer-col first"><h6>About Website</h6><p class="p-small">Ezy-Parking is a complete parking management system that applies smart solutions for short time rental of empty spaces.</p></div>
+            <div class="footer-col second"><h6>Quick Links</h6><ul class="list-unstyled li-space-lg p-small"><li><a href="index.html">Home</a></li><li><a href="find-parking.html">Find Parking</a></li><li><a href="booking.html">Book a Slot</a></li><li><a href="dashboard.html">Dashboard</a></li></ul></div>
+            <div class="footer-col third">
+                <span class="fa-stack"><a href="#"><i class="fas fa-circle fa-stack-2x"></i><i class="fab fa-facebook-f fa-stack-1x"></i></a></span>
+                <span class="fa-stack"><a href="#"><i class="fas fa-circle fa-stack-2x"></i><i class="fab fa-twitter fa-stack-1x"></i></a></span>
+                <span class="fa-stack"><a href="#"><i class="fas fa-circle fa-stack-2x"></i><i class="fab fa-instagram fa-stack-1x"></i></a></span>
+                <p class="p-small">Contact us at <a href="mailto:contact@ezyparking.com"><strong>contact@ezyparking.com</strong></a></p>
+            </div>
+        </div></div></div>
+    </div>
+    <div class="copyright"><div class="container"><div class="row"><div class="col-lg-12"><p class="p-small">Copyright © <a href="index.html">Ezy-Parking</a></p></div></div></div></div>
+    <button onclick="topFunction()" id="myBtn"><img src="images/up-arrow.png" alt="Back to top"></button>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/scripts.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const sel = document.getElementById('vioZone');
+            EzyParking.NO_PARKING_ZONES.forEach(z => {
+                sel.innerHTML += `<option value="${z.name}">${z.name} (${z.area})</option>`;
+            });
+            loadHistory();
+        });
+
+        function reportViolation(e) {
+            e.preventDefault();
+            const vehicleReg = document.getElementById('vioVehicleReg').value.trim();
+            const zone = document.getElementById('vioZone').value;
+            const description = document.getElementById('vioDescription').value.trim();
+
+            const result = EzyParking.reportViolation({ vehicleReg, zone, description });
+            const v = result.violation;
+            const veh = result.vehicle;
+
+            const container = document.getElementById('violationResult');
+            container.style.display = 'block';
+            container.innerHTML = `
+                <div class="violation-result mb-4">
+                    <h5 style="color:var(--primary);margin-bottom:1rem;"><i class="fas fa-check-circle me-2" style="color:var(--success)"></i>Violation Reported Successfully</h5>
+
+                    <!-- Owner Details -->
+                    <div style="background:#fff;border-radius:12px;padding:1.2rem;margin-bottom:1rem;">
+                        <h6 style="color:#72719b;font-size:0.75rem;text-transform:uppercase;letter-spacing:1px;margin-bottom:0.8rem;">Vehicle Owner Details</h6>
+                        <div class="row">
+                            <div class="col-6 mb-2">
+                                <div style="font-size:0.8rem;color:#72719b;">Owner</div>
+                                <div style="font-weight:700;color:var(--primary);">${v.ownerName}</div>
+                            </div>
+                            <div class="col-6 mb-2">
+                                <div style="font-size:0.8rem;color:#72719b;">Vehicle</div>
+                                <div style="font-weight:700;color:var(--primary);">${veh.model}</div>
+                            </div>
+                            <div class="col-6 mb-2">
+                                <div style="font-size:0.8rem;color:#72719b;">Registration</div>
+                                <div style="font-weight:700;color:var(--primary);">${v.vehicleReg}</div>
+                            </div>
+                            <div class="col-6 mb-2">
+                                <div style="font-size:0.8rem;color:#72719b;">Color</div>
+                                <div style="font-weight:700;color:var(--primary);">${veh.color}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Notifications -->
+                    <div>
+                        <h6 style="color:#72719b;font-size:0.75rem;text-transform:uppercase;letter-spacing:1px;margin-bottom:0.8rem;">Notifications Sent</h6>
+                        <div class="notification-badge email-sent">
+                            <i class="fas fa-envelope"></i> Email notification sent to owner
+                        </div>
+                        <div class="notification-badge rto-alert">
+                            <i class="fas fa-truck-pickup"></i> RTO towing alert dispatched
+                        </div>
+                    </div>
+
+                    <div style="margin-top:1rem;padding:0.8rem;background:#fff;border-radius:8px;font-size:0.85rem;color:#72719b;">
+                        <i class="fas fa-info-circle me-1" style="color:var(--info);"></i>
+                        Violation ID: <strong>${v.id}</strong> — Reported at ${EzyParking.formatDateTime(v.reportedAt)}
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('violationForm').reset();
+            loadHistory();
+            window.scrollTo({ top: container.offsetTop - 100, behavior: 'smooth' });
+        }
+
+        function loadHistory() {
+            const violations = EzyParking.getViolations();
+            const container = document.getElementById('violationHistory');
+
+            if (violations.length === 0) {
+                container.innerHTML = '<div class="empty-state" style="padding:2rem;"><i class="fas fa-shield-alt"></i><p>No violations reported yet</p></div>';
+                return;
+            }
+
+            container.innerHTML = violations.slice().reverse().map(v => `
+                <div style="display:flex;gap:1rem;padding:0.8rem 0;border-bottom:1px solid #f0f0f5;animation:fadeInUp 0.3s ease-out;">
+                    <div style="width:42px;height:42px;border-radius:50%;background:#fce4ec;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                        <i class="fas fa-flag" style="color:var(--danger);font-size:0.9rem;"></i>
+                    </div>
+                    <div style="flex:1;min-width:0;">
+                        <div style="font-weight:700;font-size:0.9rem;color:var(--primary);">${v.vehicleReg}</div>
+                        <div style="font-size:0.8rem;color:#72719b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${v.zone}</div>
+                        <div style="font-size:0.75rem;color:#aaa;margin-top:2px;">${EzyParking.formatDateTime(v.reportedAt)}</div>
+                    </div>
+                    <div>
+                        <span class="status-badge" style="background:#fff3e0;color:#e65100;">${v.status}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+    </script>
+</body>
+</html>
